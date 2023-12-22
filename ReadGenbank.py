@@ -3,9 +3,6 @@ import json
 
 class ReadGenbank:
     def run(self, file_path, data_types, sequence_range=None):
-        """
-        Parses a GenBank (or similar format) file and returns specified data based on the data types and sequence range.
-        """
         # Validate file extension
         if not file_path.endswith(('.str', '.ape', '.gb', '.seq')):
             raise ValueError("Invalid file extension. Supported extensions are .str, .ape, .gb, and .seq.")
@@ -15,18 +12,23 @@ class ReadGenbank:
             with open(file_path, "r") as file:
                 record = SeqIO.read(file, "genbank")
         except Exception as e:
-            return f"Error reading file: {e}"
+            return json.dumps({"error": f"Error reading file: {e}"})
 
-        results = []
+        # Validate the sequence range
+        if sequence_range:
+            start, end = sequence_range
+            if start < 0 or end > len(record.seq):
+                raise ValueError("Range exceeds the length of sequence")
+
+        results = {"circular_linear": "circular" if record.annotations.get("topology", "linear") == "circular" else "linear",
+                   "length": len(record.seq)}
 
         # Full sequence retrieval
         if "full_sequence" in data_types:
-            if sequence_range:
-                start, end = sequence_range
-            else:
+            if sequence_range is None:
                 start, end = 0, len(record.seq)
             sequence = str(record.seq[start:end])
-            results.append(f"Full Sequence [{start}:{end}]:\n{sequence}\n")
+            results["full_sequence"] = sequence
 
         # Features retrieval
         if "features" in data_types:
@@ -53,19 +55,11 @@ class ReadGenbank:
                         'qualifiers': feature.qualifiers
                     })
 
-            pretty_features = json.dumps(features, indent=4)
-            results.append(f"Features:\n{pretty_features}\n")
+            results["features"] = features
 
-        # Other data types can be implemented similarly
-
-        return "\n".join(results)
+        return json.dumps(results, indent=4)
 
 # Example usage
 reader = ReadGenbank()
-
-# Example 1: Retrieve full sequence and features within a range
-try:
-    result = reader.run("/Users/jcaucb/Downloads/trashy/SCU49845.gb", ["full_sequence", "features"], [0, 200])
-    print(result)
-except ValueError as e:
-    print(e)
+result = reader.run("p20N31.ape", ["full_sequence"])
+print(result)
