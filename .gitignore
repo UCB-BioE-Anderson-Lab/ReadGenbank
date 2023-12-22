@@ -1,0 +1,14 @@
+# General Python ignores
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+
+# macOS specific
+.DS_Store
+
+# Other files and folders to ignore
+# Add any other file/folder patterns you want to ignore
+
