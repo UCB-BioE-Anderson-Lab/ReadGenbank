@@ -1,0 +1,101 @@
+{
+    "id": "org.c9.function.bioinformatics.ReadGenbankParser.v1",
+    "name": "ReadGenbank Parser",
+    "description": "Parses a GenBank file and returns specified data, such as full sequence or features, as a JSON string.",
+    "type": "function",
+    "keywords": ["GenBank", "sequence parser", "bioinformatics", "biopython", "features"],
+    "date_created": "2024-10-10T00:00:00Z",
+    "date_last_modified": "2024-10-10T00:00:00Z",
+    "inputs": [
+      {
+        "name": "file_path",
+        "type": "string",
+        "description": "Path to the GenBank file (e.g., .gb, .ape, .seq)."
+      },
+      {
+        "name": "data_types",
+        "type": "array",
+        "description": "List of data types to extract (e.g., 'full_sequence', 'features')."
+      },
+      {
+        "name": "sequence_range",
+        "type": "tuple",
+        "description": "Optional tuple defining the start and end positions of the sequence to extract."
+      }
+    ],
+    "outputs": [
+      {
+        "type": "string",
+        "description": "JSON string containing requested data, such as full sequence, features, and metadata."
+      }
+    ],
+    "examples": [
+      {
+        "input": {
+          "file_path": "seqs/SCU49845.gb",
+          "data_types": ["full_sequence"],
+          "sequence_range": [0, 30]
+        },
+        "output": {
+          "full_sequence": "GATCCTCCATATACAACGGTATCTCCACCT"
+        }
+      },
+      {
+        "input": {
+          "file_path": "seqs/p20N31.ape",
+          "data_types": ["features"],
+          "sequence_range": null
+        },
+        "output": {
+          "features": [
+            {
+              "type": "rep_origin",
+              "location": "2381..2752",
+              "qualifiers": {
+                "locus_tag": "pMB1 ori",
+                "ApEinfo_label": "pMB1 ori"
+              }
+            },
+            {
+              "type": "CDS",
+              "location": "1234..2049",
+              "qualifiers": {
+                "locus_tag": "KnR no RS",
+                "ApEinfo_label": "KnR no RS"
+              }
+            },
+            {
+              "type": "primer_bind",
+              "location": "1..20",
+              "qualifiers": {
+                "locus_tag": "G00101",
+                "ApEinfo_label": "G00101"
+              }
+            },
+            {
+              "type": "promoter",
+              "location": "173..207",
+              "qualifiers": {
+                "locus_tag": "Pcon promoter",
+                "ApEinfo_label": "Pcon promoter"
+              }
+            },
+            {
+              "type": "CDS",
+              "location": "233..928",
+              "qualifiers": {
+                "locus_tag": "amilGFP",
+                "ApEinfo_label": "amilGFP"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "execution_details": {
+      "language": "Python",
+      "source": "read_genbank/read_genbank.py",
+      "invocation": "ReadGenbank.run"
+    }
+  }
+  
