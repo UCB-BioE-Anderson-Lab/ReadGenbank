@@ -86,5 +86,5 @@ class ReadGenbank:
 
 # Example usage
 reader = ReadGenbank()
-result = reader.run("p20N31.ape", ["full_sequence"])
+result = reader.run("seqs/p20N31.ape", ["full_sequence"])
 print(result)
