@@ -1,7 +1,7 @@
 # test_combinations.py
 
 import pytest
-from ..read_genbank.ReadGenbank import ReadGenbank
+from read_genbank.read_genbank import ReadGenbank
 import json
 
 # def test_full_sequence_and_features():

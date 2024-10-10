@@ -1,7 +1,7 @@
 # test_full_sequence.py
 
 import pytest
-from ..read_genbank.ReadGenbank import ReadGenbank
+from read_genbank.read_genbank import ReadGenbank
 import json
 
 # Test of sample record from NCBI:  https://www.ncbi.nlm.nih.gov/genbank/samplerecord/

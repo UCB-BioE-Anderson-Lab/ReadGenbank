@@ -1,7 +1,7 @@
 # test_sequence_properties.py
 
 import pytest
-from ..read_genbank.ReadGenbank import ReadGenbank
+from read_genbank.read_genbank import ReadGenbank
 import json
 
 def test_linear_sequence_from_NCBI():
